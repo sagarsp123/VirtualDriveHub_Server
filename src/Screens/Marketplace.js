@@ -27,6 +27,7 @@ export default function Marketplace() {
     const [data,setData] = useState(null)
     const [displayFilters,setDisplayFilters] = useState(null)
     const [loading,setLoading] = useState(true)
+    const [selectedFilters,setSelectedFilters] = useState(null)
     const DemoData = [
             {url: "https://www.carvana.com/vehicle/2004050", "vehicle_id": 2004050, "maker": "Nissan", "model": "Sentra", "price": 18990, "year": 2017, "body_style": "Sedan", "body_type": "Sedan", "sale_status": "Available", "mileage": 27633, "trim": "S Sedan 4D", "location": {"addressLine1": "14450 West Rd", "city": "Houston", "stateAbbreviation": "TX", "zip5": "77041"}, "details": {"basics": {"mpgCity": 27, "mpgHighway": 37, "engineCylinderCount": 4, "engineDescription": "4-Cyl, 1.8 Liter", "engineHorsepower": 0, "engineTorque": 0, "fuelDescription": "Gas", "driveTrainDescription": "FWD", "exteriorColor": "Silver", "interiorColor": "OTHER", "exteriorRGB": {"red": 201, "green": 192, "blue": 187}, "interiorRGB": {"red": 255, "green": 255, "blue": 255}, "transmission": "Auto, CVT w/Xtronic", "numberOfKeys": 1, "doors": 4, "seating": "5", "vin": "3N1AB7AP2HY321285", "stockNumber": 2001283529, "windowStickerUrl": "https://windowsticker.carvana.io/pose_api_3956c27a-069e-11ec-a73e-068f4997ba7d.pdf", "poseData": {"installedPackages": [], "installedOptions": [], "installedOptionsData": [], "standardEquipment": ["VALUE CARGO PACKA", "SPLASH GUARDS 4-P", "CARPETED FLOOR MA", "50 STATE EMISSION"], "windowStickerUrl": "https://windowsticker.carvana.io/pose_api_3956c27a-069e-11ec-a73e-068f4997ba7d.pdf"}, "marketplaceDealerId": 76, "curbWeight": 2857, "msrp": 18975, "kbbVehicleID": 421962, "engineDisplacement": 0}, "facets": [{"facetId": 10, "facetName": "Hands Free Calling"}, {"facetId": 25, "facetName": "Alloy Wheels"}], "KBBData": [{"label": "Braking and Traction", "feature": [{"label": "Braking and Traction", "displayName": "ABS (4-Wheel)", "isValuable": false, "isRare": false, "kbbOptionId": 7558666}, {"label": "Braking and Traction", "displayName": "Traction Control", "isValuable": false, "isRare": false, "kbbOptionId": 7558683}, {"label": "Braking and Traction", "displayName": "Vehicle Dynamic Control", "isValuable": false, "isRare": false, "kbbOptionId": 7558684}]}, {"label": "Comfort and Convenience", "feature": [{"label": "Comfort and Convenience", "displayName": "Air Conditioning", "isValuable": false, "isRare": false, "kbbOptionId": 7558667}, {"label": "Comfort and Convenience", "displayName": "Cruise Control", "isValuable": false, "isRare": false, "kbbOptionId": 7558671}, {"label": "Comfort and Convenience", "displayName": "Power Door Locks", "isValuable": false, "isRare": false, "kbbOptionId": 7558675}, {"label": "Comfort and Convenience", "displayName": "Power Trunk Release", "isValuable": false, "isRare": false, "kbbOptionId": 7558676}, {"label": "Comfort and Convenience", "displayName": "Power Windows", "isValuable": false, "isRare": false, "kbbOptionId": 7558678}]}, {"label": "Safety and Security", "feature": [{"label": "Safety and Security", "displayName": "Dual Air Bags", "isValuable": false, "isRare": false, "kbbOptionId": 7558672}, {"label": "Safety and Security", "displayName": "F&R Head Curtain Air Bags", "isValuable": false, "isRare": false, "kbbOptionId": 7558673}, {"label": "Safety and Security", "displayName": "Side Air Bags", "isValuable": false, "isRare": false, "kbbOptionId": 7558680}]}, {"label": "Steering", "feature": [{"label": "Steering", "displayName": "Power Steering", "isValuable": false, "isRare": false, "kbbOptionId": 7558677}, {"label": "Steering", "displayName": "Tilt & Telescoping Wheel", "isValuable": false, "isRare": false, "kbbOptionId": 7558682}]}, {"label": "Wheels and Tires", "feature": [{"label": "Wheels and Tires", "displayName": "Steel Wheels", "isValuable": false, "isRare": true, "kbbOptionId": 7558689}]}, {"label": "Entertainment and Instrumentation", "feature": [{"label": "Entertainment and Instrumentation", "displayName": "AM/FM Stereo", "isValuable": false, "isRare": false, "kbbOptionId": 7558694}, {"label": "Entertainment and Instrumentation", "displayName": "CD/MP3 (Single Disc)", "isValuable": false, "isRare": false, "kbbOptionId": 7558696}]}], "warranty": {"manufacturerBasicWarrantyMonths": 36, "manufacturerBasicWarrantyMiles": 36000, "manufacturerDriveTrainWarrantyMonths": 60, "manufacturerDriveTrainWarrantyMiles": 60000, "inServiceDate": "2018-02-13T00:00:00Z", "remainingWarrantyMonths": 0, "remainingWarrantyMiles": 8100, "remainingDriveTrainWarrantyMonths": 16, "remainingDriveTrainWarrantyMiles": 32100, "inServiceMiles": 60}}, "highlights": [{"tagId": 21, "tagCategoryId": 1, "tagKey": "AccidentFree", "tagName": "Accident Free", "tagDescription": "Like every Carvana vehicle, this vehicle has never been in a reported accident.", "sortOrder": 10, "isResultTileDisplayable": false, "isVdpDisplayable": true}, {"tagId": 20, "tagCategoryId": 1, "tagKey": "SingleOwner", "tagName": "Single Owner", "tagDescription": "This vehicle\u2019s CarFax history report shows it has had only one previous owner.", "sortOrder": 200, "isResultTileDisplayable": false, "isVdpDisplayable": true}], "images": ["https://vexgateway.fastly.carvana.io/vex-571245/details/feature-9569543.jpg?v=1631658156.876", null, "https://vexgateway.fastly.carvana.io/vex-571245/details/feature-9569545.jpg?v=1631658156.876", "https://vexgateway.fastly.carvana.io/vex-571245/details/feature-9569546.jpg?v=1631658156.876", "https://vexgateway.fastly.carvana.io/vex-571245/details/feature-9569547.jpg?v=1631658156.876", "https://vexgateway.fastly.carvana.io/vex-571245/details/feature-9569548.jpg?v=1631658156.876", "https://vexgateway.fastly.carvana.io/vex-571245/details/feature-9569549.jpg?v=1631658156.876", "https://vexgateway.fastly.carvana.io/vex-571245/details/feature-9569550.jpg?v=1631658156.876", "https://vexgateway.fastly.carvana.io/vex-571245/details/feature-9569551.jpg?v=1631658156.876", "https://vexgateway.fastly.carvana.io/vex-571245/details/feature-9569552.jpg?v=1631658156.876", "https://vexgateway.fastly.carvana.io/vex-571245/details/feature-9569553.jpg?v=1631658156.876", "https://vexgateway.fastly.carvana.io/vex-571245/details/feature-9569554.jpg?v=1631658156.876", null, null, "https://vexgateway.fastly.carvana.io/vex-571245/details/feature-9569557.jpg?v=1631658156.876", "https://vexgateway.fastly.carvana.io/vex-571245/details/feature-9569578.jpg?v=1631658156.876", "https://vexgateway.fastly.carvana.io/vex-571245/details/feature-9569580.jpg?v=1631658156.876"], "scraped_at": "2021-10-09 13:10:07"},
             {"url": "https://www.carvana.com/vehicle/1834140", "vehicle_id": 1834140, "maker": "Nissan", "model": "Altima", "price": 17590, "year": 2015, "body_style": "Sedan", "body_type": "Sedan", "sale_status": "Available", "mileage": 55648, "trim": "2.5 SV Sedan 4D", "location": {"addressLine1": "1951 Morgan Rd", "city": "Bessemer", "stateAbbreviation": "AL", "zip5": "35022"}, "details": {"basics": {"mpgCity": 27, "mpgHighway": 38, "engineCylinderCount": 4, "engineDescription": "4-Cyl, 2.5 Liter", "engineHorsepower": 0, "engineTorque": 0, "fuelDescription": "Gas", "driveTrainDescription": "FWD", "exteriorColor": "Black", "interiorColor": "OTHER", "exteriorRGB": {"red": 0, "green": 0, "blue": 0}, "interiorRGB": {"red": 255, "green": 255, "blue": 255}, "transmission": "Automatic, Xtronic CVT", "numberOfKeys": 1, "doors": 4, "seating": "5", "vin": "1N4AL3AP6FC104658", "stockNumber": 2001064426, "windowStickerUrl": "https://windowsticker.carvana.io/pose_api_fed88730-b208-11eb-a1da-06d4e98573f1.pdf", "poseData": {"installedPackages": [], "installedOptions": [], "installedOptionsData": [], "standardEquipment": ["50 STATE EMISSIONS", "Splash Guards", "ACTIVATION DISCLAIMER", "ILLUMINATED KICK PLATES", "FLOOR MATS PLUS TRUNK MAT"], "windowStickerUrl": "https://windowsticker.carvana.io/pose_api_fed88730-b208-11eb-a1da-06d4e98573f1.pdf"}, "marketplaceDealerId": 76, "curbWeight": 3206, "msrp": 25555, "kbbVehicleID": 399650, "engineDisplacement": 0}, "facets": [{"facetId": 5, "facetName": "Rear View Camera"}, {"facetId": 8, "facetName": "Push Button Start"}, {"facetId": 10, "facetName": "Hands Free Calling"}, {"facetId": 12, "facetName": "Blindspot Sensors"}, {"facetId": 15, "facetName": "Power Driver Seat"}, {"facetId": 17, "facetName": "Satellite Radio Enabled"}, {"facetId": 25, "facetName": "Alloy Wheels"}], "KBBData": [{"label": "Wheels and Tires", "feature": [{"label": "Wheels and Tires", "displayName": "Alloy Wheels", "isValuable": false, "isRare": false, "kbbOptionId": 5884780}]}, {"label": "Braking and Traction", "feature": [{"label": "Braking and Traction", "displayName": "Traction Control", "isValuable": false, "isRare": false, "kbbOptionId": 5884787}, {"label": "Braking and Traction", "displayName": "Vehicle Dynamic Control", "isValuable": false, "isRare": false, "kbbOptionId": 5884788}, {"label": "Braking and Traction", "displayName": "ABS (4-Wheel)", "isValuable": false, "isRare": false, "kbbOptionId": 5884789}]}, {"label": "Comfort and Convenience", "feature": [{"label": "Comfort and Convenience", "displayName": "Keyless Start", "isValuable": false, "isRare": false, "kbbOptionId": 5884790}, {"label": "Comfort and Convenience", "displayName": "Power Door Locks", "isValuable": false, "isRare": false, "kbbOptionId": 5884791}, {"label": "Comfort and Convenience", "displayName": "Keyless Entry", "isValuable": false, "isRare": false, "kbbOptionId": 5884802}, {"label": "Comfort and Convenience", "displayName": "Air Conditioning", "isValuable": false, "isRare": false, "kbbOptionId": 5884804}, {"label": "Comfort and Convenience", "displayName": "Power Windows", "isValuable": false, "isRare": false, "kbbOptionId": 5884805}, {"label": "Comfort and Convenience", "displayName": "Cruise Control", "isValuable": false, "isRare": false, "kbbOptionId": 5884806}, {"label": "Comfort and Convenience", "displayName": "Anti-Theft System", "isValuable": false, "isRare": false, "kbbOptionId": 7372261}]}, {"label": "Steering", "feature": [{"label": "Steering", "displayName": "Power Steering", "isValuable": false, "isRare": false, "kbbOptionId": 5884792}, {"label": "Steering", "displayName": "Tilt & Telescoping Wheel", "isValuable": false, "isRare": false, "kbbOptionId": 5884794}]}, {"label": "Entertainment and Instrumentation", "feature": [{"label": "Entertainment and Instrumentation", "displayName": "Bluetooth Wireless", "isValuable": false, "isRare": false, "kbbOptionId": 5884796}, {"label": "Entertainment and Instrumentation", "displayName": "AM/FM Stereo", "isValuable": false, "isRare": false, "kbbOptionId": 5884807}, {"label": "Entertainment and Instrumentation", "displayName": "CD/MP3 (Single Disc)", "isValuable": false, "isRare": false, "kbbOptionId": 5884809}, {"label": "Entertainment and Instrumentation", "displayName": "SiriusXM Satellite", "isValuable": false, "isRare": false, "kbbOptionId": 5884810}]}, {"label": "Safety and Security", "feature": [{"label": "Safety and Security", "displayName": "Dual Air Bags", "isValuable": false, "isRare": false, "kbbOptionId": 5884798}, {"label": "Safety and Security", "displayName": "Side Air Bags", "isValuable": false, "isRare": false, "kbbOptionId": 5884799}, {"label": "Safety and Security", "displayName": "F&R Head Curtain Air Bags", "isValuable": false, "isRare": false, "kbbOptionId": 5884800}, {"label": "Safety and Security", "displayName": "Backup Camera", "isValuable": false, "isRare": false, "kbbOptionId": 5884811}]}, {"label": "Seats", "feature": [{"label": "Seats", "displayName": "Power Seat", "isValuable": false, "isRare": false, "kbbOptionId": 5884812}]}, {"label": "Exterior", "feature": [{"label": "Exterior", "displayName": "Fog Lights", "isValuable": false, "isRare": false, "kbbOptionId": 7372260}]}], "warranty": {"manufacturerBasicWarrantyMonths": 36, "manufacturerBasicWarrantyMiles": 36000, "manufacturerDriveTrainWarrantyMonths": 60, "manufacturerDriveTrainWarrantyMiles": 60000, "inServiceDate": "2014-09-18T00:00:00Z", "remainingWarrantyMonths": 0, "remainingWarrantyMiles": 0, "remainingDriveTrainWarrantyMonths": 0, "remainingDriveTrainWarrantyMiles": 4100, "inServiceMiles": 5}}, "highlights": [{"tagId": 21, "tagCategoryId": 1, "tagKey": "AccidentFree", "tagName": "Accident Free", "tagDescription": "Like every Carvana vehicle, this vehicle has never been in a reported accident.", "sortOrder": 10, "isResultTileDisplayable": false, "isVdpDisplayable": true}, {"tagId": 20, "tagCategoryId": 1, "tagKey": "SingleOwner", "tagName": "Single Owner", "tagDescription": "This vehicle\u2019s CarFax history report shows it has had only one previous owner.", "sortOrder": 200, "isResultTileDisplayable": false, "isVdpDisplayable": true}], "images": ["https://vexgateway.fastly.carvana.io/vex-418962/details/feature-6679177.jpg?v=1622656714.635", null, "https://vexgateway.fastly.carvana.io/vex-418962/details/feature-6679179.jpg?v=1622656714.635", "https://vexgateway.fastly.carvana.io/vex-418962/details/feature-6679180.jpg?v=1622656714.635", "https://vexgateway.fastly.carvana.io/vex-418962/details/feature-6679181.jpg?v=1622656714.635", "https://vexgateway.fastly.carvana.io/vex-418962/details/feature-6679182.jpg?v=1622656714.635", "https://vexgateway.fastly.carvana.io/vex-418962/details/feature-6679183.jpg?v=1622656714.635", "https://vexgateway.fastly.carvana.io/vex-418962/details/feature-6679184.jpg?v=1622656714.636", "https://vexgateway.fastly.carvana.io/vex-418962/details/feature-6679185.jpg?v=1622656714.636", "https://vexgateway.fastly.carvana.io/vex-418962/details/feature-6679186.jpg?v=1622656714.636", "https://vexgateway.fastly.carvana.io/vex-418962/details/feature-6679187.jpg?v=1622656714.636", "https://vexgateway.fastly.carvana.io/vex-418962/details/feature-6679188.jpg?v=1622656714.636", null, "https://vexgateway.fastly.carvana.io/vex-418962/details/feature-6679190.jpg?v=1622656714.636", "https://vexgateway.fastly.carvana.io/vex-418962/details/feature-6679191.jpg?v=1622656714.636", "https://vexgateway.fastly.carvana.io/vex-418962/details/feature-6679192.jpg?v=1622656714.636", "https://vexgateway.fastly.carvana.io/vex-418962/details/feature-6679193.jpg?v=1622656714.636"], "scraped_at": "2021-10-09 13:10:10"},
@@ -52,9 +53,8 @@ export default function Marketplace() {
     const initialLoad = async()=>{
         return new Promise(async (resolve,reject)=>{
             try{
-                let {jsonData} = await apiClient.get('/listings')
-                resolve(jsonData)
-    
+                let { data } = await apiClient.get('/listings')
+                resolve(data) 
             }catch(e){
                 reject(null)
             }
@@ -71,14 +71,57 @@ export default function Marketplace() {
             {
               id: 'maker',
               name: 'Maker',
-              options: [...makerSet].map(x=>{return {value:x, label:x.charAt(0).toUpperCase() + x.slice(1), checked: false}})
-              
+              options: [...makerSet].map(x=>{return {value:x, label:x.charAt(0).toUpperCase() + x.slice(1), checked: false}}),
+              handleChange: function(event){
+                
+                setSelectedFilters((prev)=>{
+                  if(event.target.checked){
+                      if(prev==null){
+                        prev = {
+                          "maker":[event.target.value]
+                        }
+                      }else{
+                        if(prev.maker==undefined){
+                          prev.maker=[event.target.value]
+                        }else{
+                          prev.maker.push(event.target.value)
+                        }
+                      }
+                  }else{
+                    prev.maker = prev.maker.filter((item)=>{
+                      return item!==event.target.value
+                    })
+                  }
+                  return {...prev};
+                })
+              },
               
             },
             {
               id: 'body-type',
               name: 'Body Type',
-              options: [...bodyTypeSet].map(x=>{return {value:x, label:x.charAt(0).toUpperCase() + x.slice(1), checked: false}})
+              options: [...bodyTypeSet].map(x=>{return {value:x, label:x.charAt(0).toUpperCase() + x.slice(1), checked: false}}),
+              handleChange: function(event){                
+                setSelectedFilters((prev)=>{
+                  if(event.target.checked){
+                      if(prev===null){
+                        prev = {
+                          "bodyType":[event.target.value]
+                        }
+                      }else{
+                        if(prev.bodyType==undefined){
+                          prev.bodyType=[]
+                        }
+                        prev.bodyType.push(event.target.value)
+                      }
+                  }else{
+                    prev.bodyType = prev.bodyType.filter((item)=>{
+                      return item!==event.target.value
+                    })
+                  }
+                  return {...prev};
+                })
+              },
             },
           ]
           setDisplayFilters(filters)
@@ -164,7 +207,7 @@ export default function Marketplace() {
                                       name={`${section.id}[]`}
                                       defaultValue={option.value}
                                       type="checkbox"
-                                      onChange={(e)=>console.log(e.target)}
+                                      onChange={(e)=>section.handleChange(e)}
                                       defaultChecked={option.checked}
                                       className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
                                     />
@@ -287,6 +330,7 @@ export default function Marketplace() {
                                   name={`${section.id}[]`}
                                   defaultValue={option.value}
                                   type="checkbox"
+                                  onChange={(e)=>section.handleChange(e)}
                                   defaultChecked={option.checked}
                                   className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
                                 />
@@ -307,7 +351,7 @@ export default function Marketplace() {
               </form>
 
               {/* Product grid */}
-              <div className="lg:col-span-3"><PostingList cars={data}/></div>
+              <div className="lg:col-span-3"><PostingList cars={data} filters={selectedFilters}/></div>
             </div>
           </section>
         </main>
