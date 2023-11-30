@@ -1,24 +1,25 @@
-import logo from './logo.svg';
 import './App.css';
+import { Route, Routes } from "react-router-dom";
+import Navbar from './Components/Navbar';
+import Marketplace from './Screens/Marketplace';
+import CreateListing from './Components/CreateListing';
+import NotFound from './Screens/NotFound';
+import ListingOverview from './Screens/ListingOverview';
+
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+    <Navbar />
+    <Routes>
+      <Route path="/" element={<h1>Home</h1>} />
+      <Route path="/marketplace" element={<Marketplace/>} />
+      <Route path="/maps" element={<h1>Maps</h1>} />
+      <Route path='/listing/:id' element={<ListingOverview/>}/>
+      <Route path='/listing/create' element={<CreateListing/>}/>
+      <Route path="*" element={<NotFound/>}/>
+    </Routes>
+    </>
   );
 }
 
