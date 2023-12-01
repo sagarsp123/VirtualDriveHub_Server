@@ -5,6 +5,7 @@ import { XMarkIcon } from '@heroicons/react/24/outline'
 import { ChevronDownIcon, FunnelIcon, MinusIcon, PlusIcon, Squares2X2Icon } from '@heroicons/react/20/solid'
 import PostingList from '../Components/PostingList'
 import { apiClient } from '../axiosInstance'
+import { Link } from "react-router-dom";
 
 const sortOptions = [
   { name: 'Price: Low to High', href: '#', current: false },
@@ -246,7 +247,14 @@ export default function Marketplace() {
                       aria-hidden="true"
                     />
                   </Menu.Button>
+                
+                  <button className="ml-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                <Link to="/listing/create" style={{ color: "inherit", textDecoration: "none" }}>
+                  Add New Car Listing
+                </Link>
+              </button>
                 </div>
+
 
                 <Transition
                   as={Fragment}
@@ -280,10 +288,10 @@ export default function Marketplace() {
                 </Transition>
               </Menu>
 
-              <button type="button" className="-m-2 ml-5 p-2 text-gray-400 hover:text-gray-500 sm:ml-7">
+              {/* <button type="button" className="-m-2 ml-5 p-2 text-gray-400 hover:text-gray-500 sm:ml-7">
                 <span className="sr-only">View grid</span>
                 <Squares2X2Icon className="h-5 w-5" aria-hidden="true" />
-              </button>
+              </button> */}
               <button
                 type="button"
                 className="-m-2 ml-4 p-2 text-gray-400 hover:text-gray-500 sm:ml-6 lg:hidden"

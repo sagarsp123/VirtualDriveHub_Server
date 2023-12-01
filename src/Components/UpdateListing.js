@@ -2,9 +2,8 @@
 import { PhotoIcon } from '@heroicons/react/24/solid'
 import { useState } from 'react'
 import logo from '../assets/car.jpg';
-import '../App.css';
 
-export default function CreateListing() {
+export default function UpdateListing() {
     const [listing,setListing] = useState({})
   return (
     <div
@@ -24,7 +23,7 @@ export default function CreateListing() {
     <form className="border border-gray-900 p-8">
       <div className="space-y-12">
         <div className="border-b border-gray-900/10 pb-12">
-          <h1 className="text-2xl font-extrabold leading-7 text-gray-900">New Car Listing</h1>
+          <h1 className="text-2xl font-extrabold leading-7 text-gray-900">Update Existing Car Listing</h1>
 
           <div className="border-b border-gray-900/10 pb-12">
           <hr></hr>
@@ -288,4 +287,5 @@ export default function CreateListing() {
     </div>
     </div>
   )
+
 }

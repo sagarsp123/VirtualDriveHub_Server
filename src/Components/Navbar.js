@@ -17,7 +17,7 @@ import { Link } from 'react-router-dom';
 
 const listingMenu = [
   { name: 'Delete Listing', description: 'Sad to see you go :(', href: '/', icon: TrashIcon },
-  { name: 'Update Listing', description: 'Need to update the existing listing? Click here', href: '#', icon: CursorArrowRaysIcon },
+  { name: 'Update Listing', description: 'Need to update the existing listing? Click here', href: '/listing/update', icon: CursorArrowRaysIcon },
   { name: 'Create Listing', description: 'Add a new listing for your car!!', href: '/listing/create', icon: PlusIcon },
   
 ]
@@ -39,7 +39,7 @@ export default function Navbar() {
         <div className="flex lg:flex-1">
           <Link to="/" className="-m-1.5 p-1.5">
             <span className="sr-only">VirtuDrive-Hub</span>
-            <img className="h-10 w-auto" src={logo} alt="Logo" />
+            <img className="h-12 w-auto" src={logo} alt="Logo" />
           </Link>
         </div>
         <div className="flex lg:hidden">
