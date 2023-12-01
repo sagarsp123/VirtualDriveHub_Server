@@ -17,7 +17,7 @@ import { Link } from 'react-router-dom';
 
 const listingMenu = [
   { name: 'Delete Listing', description: 'Sad to see you go :(', href: '/', icon: TrashIcon },
-  { name: 'Update Listing', description: 'Need to update the existing listing? Click here', href: '#', icon: CursorArrowRaysIcon },
+  { name: 'Update Listing', description: 'Need to update the existing listing? Click here', href: '/listing/update', icon: CursorArrowRaysIcon },
   { name: 'Create Listing', description: 'Add a new listing for your car!!', href: '/listing/create', icon: PlusIcon },
   
 ]

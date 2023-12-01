@@ -2,14 +2,14 @@
 import { PhotoIcon } from '@heroicons/react/24/solid'
 import { useState } from 'react'
 
-export default function CreateListing() {
+export default function UpdateListing() {
     const [listing,setListing] = useState({})
   return (
     <div className='container mx-auto flex max-w-7xl items-center justify-between p-6 lg:px-8'>
     <form>
       <div className="space-y-12">
         <div className="border-b border-gray-900/10 pb-12">
-          <h2 className="text-base font-semibold leading-7 text-gray-900">New Car Listing</h2>
+          <h2 className="text-base font-semibold leading-7 text-gray-900">Update Existing Car Listing</h2>
 
           <div className="border-b border-gray-900/10 pb-12">
           <h2 className="text-base font-semibold leading-7 text-gray-900">Car Details</h2>
