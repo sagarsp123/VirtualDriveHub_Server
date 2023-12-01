@@ -1,18 +1,35 @@
 
 import { PhotoIcon } from '@heroicons/react/24/solid'
 import { useState } from 'react'
+import logo from '../assets/car.jpg';
+import '../App.css';
 
 export default function CreateListing() {
     const [listing,setListing] = useState({})
   return (
-    <div className='container mx-auto flex max-w-7xl items-center justify-between p-6 lg:px-8'>
-    <form>
+    <div
+      className='flex min-h-screen' style={{ color: 'white' }}>
+      <div
+      className='flex-shrink-0 w-1/2'
+      style={{
+        paddingTop : '20px',
+        background: `linear-gradient(rgba(1, 0, 0, 0.09), rgba(1, 0, 0, 0.09)), url(${logo}) center / cover no-repeat`,
+      }}
+        
+    >
+    </div>
+
+    <div className='p-6 lg:px-10'>
+    
+    <form className="border border-gray-900 p-8">
       <div className="space-y-12">
         <div className="border-b border-gray-900/10 pb-12">
-          <h2 className="text-base font-semibold leading-7 text-gray-900">New Car Listing</h2>
+          <h1 className="text-2xl font-extrabold leading-7 text-gray-900">New Car Listing</h1>
 
           <div className="border-b border-gray-900/10 pb-12">
-          <h2 className="text-base font-semibold leading-7 text-gray-900">Car Details</h2>
+          <hr></hr>
+          <br></br>
+          <h2 className="text-base font-bold leading-7 text-gray-900">Car Details</h2>
           
           <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
             <div className="sm:col-span-3">
@@ -153,9 +170,9 @@ export default function CreateListing() {
 
               </div>
         </div>
-
+        
           <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
-          <h2 className="text-base font-semibold leading-7 text-gray-900">Location Details</h2>
+          <h2 className="text-base font-bold leading-7 text-gray-900">Location</h2>
           
           <div className="col-span-full">
               <label htmlFor="addressLine1" className="block text-sm font-medium leading-6 text-gray-900">
@@ -221,7 +238,7 @@ export default function CreateListing() {
         </div>
 
         <div className="border-b border-gray-900/10 pb-12">
-          <h2 className="text-base font-semibold leading-7 text-gray-900">Car Equipment Details</h2>
+          <h2 className="text-base font-bold leading-7 text-gray-900">Car Equipment Details</h2>
           <div className="col-span-full">
             <br></br>
               <label htmlFor="equipment_details" className="block text-sm font-medium leading-6 text-gray-900">
@@ -264,10 +281,11 @@ export default function CreateListing() {
           type="submit"
           className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
         >
-          Save
+          Submit
         </button>
       </div>
     </form>
+    </div>
     </div>
   )
 }
