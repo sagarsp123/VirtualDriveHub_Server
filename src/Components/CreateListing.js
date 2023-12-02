@@ -3,9 +3,64 @@ import { PhotoIcon } from '@heroicons/react/24/solid'
 import { useState } from 'react'
 import logo from '../assets/car.jpg';
 import '../App.css';
+import axios from "axios";
 
 export default function CreateListing() {
     const [listing,setListing] = useState({})
+    const [formData, setFormData] = useState({
+      MakerName: '',
+      model: '',
+      trim: '',
+      body_type: '',
+      year: 2023,
+      mileage: 0,
+      sale_status: 'Available',
+      price: 0,
+      addressLine1: '',
+      city: '',
+      state: '',
+      zip5: '',
+      // equipment_details: '',
+      // image_url: '', // Add this field for image URL
+    });
+
+    const handleInputChange = (e) => {
+      const { name, value } = e.target;
+      setFormData((prevData) => ({ ...prevData, [name]: value }));
+    };
+    
+    const handleSubmit = async (e) => {
+      e.preventDefault();
+      console.log(e.target.MakerName.value)
+      try {
+        const updatedFormData = {
+          MakerName: e.target.MakerName.value,
+          model: e.target.model.value,
+          trim: e.target.trim.value,
+          body_type: e.target.body_type.value,
+          year: e.target.year.value,
+          mileage: e.target.mileage.value,
+          sale_status: e.target.sale_status.value,
+          price: e.target.price.value,
+          addressLine1: e.target.addressLine1.value,
+          city: e.target.city.value,
+          state: e.target.state.value,
+          zip5: e.target.zip5.value,
+          // equipment_details: e.target.equipment_details.value,
+          // image_url: e.target.image_url.value,
+        };
+
+        console.log(updatedFormData)
+
+        const res = await axios.post('http://localhost:8800/listings', updatedFormData);
+        console.log(res.data); // Log the response from the server
+        // You can add additional logic here if needed
+      } catch (error) {
+        console.error('Error submitting form:', error);
+      }
+    };
+  
+
   return (
     <div
       className='flex min-h-screen' style={{ color: 'white' }}>
@@ -21,7 +76,7 @@ export default function CreateListing() {
 
     <div className='p-6 lg:px-10'>
     
-    <form className="border border-gray-900 p-8">
+    <form className="border border-gray-900 p-8" onSubmit={handleSubmit}>
       <div className="space-y-12">
         <div className="border-b border-gray-900/10 pb-12">
           <h1 className="text-2xl font-extrabold leading-7 text-gray-900">New Car Listing</h1>
@@ -41,6 +96,8 @@ export default function CreateListing() {
                   type="text"
                   name="MakerName"
                   id="MakerName"
+                  value = {formData.MakerName}
+                  onChange={handleInputChange}
                   autoComplete="MakerName"
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
@@ -56,6 +113,8 @@ export default function CreateListing() {
                   type="text"
                   name="model"
                   id="model"
+                  value = {formData.model}
+                  onChange={handleInputChange}
                   autoComplete="model"
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
@@ -71,6 +130,8 @@ export default function CreateListing() {
                   type="text"
                   name="trim"
                   id="trim"
+                  value = {formData.trim}
+                  onChange={handleInputChange}
                   autoComplete="trim"
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
@@ -87,6 +148,8 @@ export default function CreateListing() {
                   id="body_type"
                   name="body_type"
                   type="text"
+                  value = {formData.body_type}
+                  onChange={handleInputChange}
                   autoComplete="body_type"
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
@@ -102,6 +165,8 @@ export default function CreateListing() {
                   id="year"
                   name="year"
                   autoComplete="year"
+                  value = {formData.year}
+                  onChange={handleInputChange}
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
                 >
                   <option>2023</option>
@@ -129,6 +194,8 @@ export default function CreateListing() {
                   id="mileage"
                   name="mileage"
                   type="number"
+                  value = {formData.mileage}
+                  onChange={handleInputChange}
                   autoComplete="mileage"
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
@@ -144,6 +211,8 @@ export default function CreateListing() {
                   id="sale_status"
                   name="sale_status"
                   autoComplete="sale_status"
+                  value = {formData.sale_status}
+                  onChange={handleInputChange}
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
                 >
                   <option>Available</option>
@@ -161,6 +230,8 @@ export default function CreateListing() {
                   id="price"
                   name="price"
                   type="number"
+                  value = {formData.price}
+                  onChange={handleInputChange}
                   autoComplete="price"
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
@@ -183,6 +254,8 @@ export default function CreateListing() {
                   type="text"
                   name="addressLine1"
                   id="addressLine1"
+                  value = {formData.addressLine1}
+                  onChange={handleInputChange}
                   autoComplete="addressLine1"
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
@@ -198,6 +271,8 @@ export default function CreateListing() {
                   type="text"
                   name="city"
                   id="city"
+                  value = {formData.city}
+                  onChange={handleInputChange}
                   autoComplete="city"
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
@@ -213,6 +288,8 @@ export default function CreateListing() {
                   type="text"
                   name="state"
                   id="state"
+                  value = {formData.state}
+                  onChange={handleInputChange}
                   autoComplete="state"
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
@@ -228,6 +305,8 @@ export default function CreateListing() {
                   type="text"
                   name="zip5"
                   id="zip5"
+                  value = {formData.zip5}
+                  onChange={handleInputChange}
                   autoComplete="zip5"
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
@@ -236,7 +315,7 @@ export default function CreateListing() {
 
           </div>
         </div>
-
+{/* 
         <div className="border-b border-gray-900/10 pb-12">
           <h2 className="text-base font-bold leading-7 text-gray-900">Car Equipment Details</h2>
           <div className="col-span-full">
@@ -257,9 +336,9 @@ export default function CreateListing() {
               </div>
               <p className="mt-3 text-sm leading-6 text-gray-600">Mention the car equipments in the field</p>
             </div>
-        </div>
+        </div> */}
 
-        <div>
+        {/* <div>
         <label htmlFor="image_url" className="block text-sm font-medium leading-6 text-gray-900">
                 Image URL
           </label>
@@ -269,7 +348,7 @@ export default function CreateListing() {
           accept="image/*"
           // onChange={handleImageChange}
         />
-        </div>
+        </div> */}
 
       </div>
 

@@ -1,33 +1,104 @@
-import { useState } from 'react'
-import { StarIcon } from '@heroicons/react/20/solid'
-import { RadioGroup } from '@headlessui/react'
+import { useState, useEffect } from 'react'
 import { useLocation, Link, useParams } from 'react-router-dom'
+import axios from "axios";
+import acura from '../assets/acura.jpg';
 
-const car = {
-  "url": "https://www.carvana.com/vehicle/2004050", "vehicle_id": 2004050, "maker": "Nissan", "model": "Sentra", "price": 18990, "year": 2017, "body_style": "Sedan", "body_type": "Sedan", "sale_status": "Available", "mileage": 27633, "trim": "S Sedan 4D", "location": {"addressLine1": "14450 West Rd", "city": "Houston", "stateAbbreviation": "TX", "zip5": "77041"}, "details": {"basics": {"mpgCity": 27, "mpgHighway": 37, "engineCylinderCount": 4, "engineDescription": "4-Cyl, 1.8 Liter", "engineHorsepower": 0, "engineTorque": 0, "fuelDescription": "Gas", "driveTrainDescription": "FWD", "exteriorColor": "Silver", "interiorColor": "OTHER", "exteriorRGB": {"red": 201, "green": 192, "blue": 187}, "interiorRGB": {"red": 255, "green": 255, "blue": 255}, "transmission": "Auto, CVT w/Xtronic", "numberOfKeys": 1, "doors": 4, "seating": "5", "vin": "3N1AB7AP2HY321285", "stockNumber": 2001283529, "windowStickerUrl": "https://windowsticker.carvana.io/pose_api_3956c27a-069e-11ec-a73e-068f4997ba7d.pdf", "poseData": {"installedPackages": [], "installedOptions": [], "installedOptionsData": [], "standardEquipment": ["VALUE CARGO PACKA", "SPLASH GUARDS 4-P", "CARPETED FLOOR MA", "50 STATE EMISSION"], "windowStickerUrl": "https://windowsticker.carvana.io/pose_api_3956c27a-069e-11ec-a73e-068f4997ba7d.pdf"}, "marketplaceDealerId": 76, "curbWeight": 2857, "msrp": 18975, "kbbVehicleID": 421962, "engineDisplacement": 0}, "facets": [{"facetId": 10, "facetName": "Hands Free Calling"}, {"facetId": 25, "facetName": "Alloy Wheels"}], "KBBData": [{"label": "Braking and Traction", "feature": [{"label": "Braking and Traction", "displayName": "ABS (4-Wheel)", "isValuable": false, "isRare": false, "kbbOptionId": 7558666}, {"label": "Braking and Traction", "displayName": "Traction Control", "isValuable": false, "isRare": false, "kbbOptionId": 7558683}, {"label": "Braking and Traction", "displayName": "Vehicle Dynamic Control", "isValuable": false, "isRare": false, "kbbOptionId": 7558684}]}, {"label": "Comfort and Convenience", "feature": [{"label": "Comfort and Convenience", "displayName": "Air Conditioning", "isValuable": false, "isRare": false, "kbbOptionId": 7558667}, {"label": "Comfort and Convenience", "displayName": "Cruise Control", "isValuable": false, "isRare": false, "kbbOptionId": 7558671}, {"label": "Comfort and Convenience", "displayName": "Power Door Locks", "isValuable": false, "isRare": false, "kbbOptionId": 7558675}, {"label": "Comfort and Convenience", "displayName": "Power Trunk Release", "isValuable": false, "isRare": false, "kbbOptionId": 7558676}, {"label": "Comfort and Convenience", "displayName": "Power Windows", "isValuable": false, "isRare": false, "kbbOptionId": 7558678}]}, {"label": "Safety and Security", "feature": [{"label": "Safety and Security", "displayName": "Dual Air Bags", "isValuable": false, "isRare": false, "kbbOptionId": 7558672}, {"label": "Safety and Security", "displayName": "F&R Head Curtain Air Bags", "isValuable": false, "isRare": false, "kbbOptionId": 7558673}, {"label": "Safety and Security", "displayName": "Side Air Bags", "isValuable": false, "isRare": false, "kbbOptionId": 7558680}]}, {"label": "Steering", "feature": [{"label": "Steering", "displayName": "Power Steering", "isValuable": false, "isRare": false, "kbbOptionId": 7558677}, {"label": "Steering", "displayName": "Tilt & Telescoping Wheel", "isValuable": false, "isRare": false, "kbbOptionId": 7558682}]}, {"label": "Wheels and Tires", "feature": [{"label": "Wheels and Tires", "displayName": "Steel Wheels", "isValuable": false, "isRare": true, "kbbOptionId": 7558689}]}, {"label": "Entertainment and Instrumentation", "feature": [{"label": "Entertainment and Instrumentation", "displayName": "AM/FM Stereo", "isValuable": false, "isRare": false, "kbbOptionId": 7558694}, {"label": "Entertainment and Instrumentation", "displayName": "CD/MP3 (Single Disc)", "isValuable": false, "isRare": false, "kbbOptionId": 7558696}]}], "warranty": {"manufacturerBasicWarrantyMonths": 36, "manufacturerBasicWarrantyMiles": 36000, "manufacturerDriveTrainWarrantyMonths": 60, "manufacturerDriveTrainWarrantyMiles": 60000, "inServiceDate": "2018-02-13T00:00:00Z", "remainingWarrantyMonths": 0, "remainingWarrantyMiles": 8100, "remainingDriveTrainWarrantyMonths": 16, "remainingDriveTrainWarrantyMiles": 32100, "inServiceMiles": 60}}, "highlights": [{"tagId": 21, "tagCategoryId": 1, "tagKey": "AccidentFree", "tagName": "Accident Free", "tagDescription": "Like every Carvana vehicle, this vehicle has never been in a reported accident.", "sortOrder": 10, "isResultTileDisplayable": false, "isVdpDisplayable": true}, {"tagId": 20, "tagCategoryId": 1, "tagKey": "SingleOwner", "tagName": "Single Owner", "tagDescription": "This vehicle\u2019s CarFax history report shows it has had only one previous owner.", "sortOrder": 200, "isResultTileDisplayable": false, "isVdpDisplayable": true}], "images": ["https://vexgateway.fastly.carvana.io/vex-571245/details/feature-9569543.jpg?v=1631658156.876", null, "https://vexgateway.fastly.carvana.io/vex-571245/details/feature-9569545.jpg?v=1631658156.876", "https://vexgateway.fastly.carvana.io/vex-571245/details/feature-9569546.jpg?v=1631658156.876", "https://vexgateway.fastly.carvana.io/vex-571245/details/feature-9569547.jpg?v=1631658156.876", "https://vexgateway.fastly.carvana.io/vex-571245/details/feature-9569548.jpg?v=1631658156.876", "https://vexgateway.fastly.carvana.io/vex-571245/details/feature-9569549.jpg?v=1631658156.876", "https://vexgateway.fastly.carvana.io/vex-571245/details/feature-9569550.jpg?v=1631658156.876", "https://vexgateway.fastly.carvana.io/vex-571245/details/feature-9569551.jpg?v=1631658156.876", "https://vexgateway.fastly.carvana.io/vex-571245/details/feature-9569552.jpg?v=1631658156.876", "https://vexgateway.fastly.carvana.io/vex-571245/details/feature-9569553.jpg?v=1631658156.876", "https://vexgateway.fastly.carvana.io/vex-571245/details/feature-9569554.jpg?v=1631658156.876", null, null, "https://vexgateway.fastly.carvana.io/vex-571245/details/feature-9569557.jpg?v=1631658156.876", "https://vexgateway.fastly.carvana.io/vex-571245/details/feature-9569578.jpg?v=1631658156.876", "https://vexgateway.fastly.carvana.io/vex-571245/details/feature-9569580.jpg?v=1631658156.876"], "scraped_at": "2021-10-09 13:10:07"
-}
+
 const reviews = { href: '#', average: 4, totalCount: 117 }
 
-function classNames(...classes) {
-  return classes.filter(Boolean).join(' ')
-}
 
 export default function ListingOverview() {
     const location = useLocation()
     const {name} = location.state
     const params = useParams()
     const vehicle_id = params.id
+    const [data,setData] = useState([])
+    const [loading, setLoading] = useState(true);
+
+    const [makerNameValue, setMakerNameValue] = useState('');
+    const [modelValue, setmodelValue] = useState('');
+    const [price, setPrice] = useState('');
+    const [body_type, setbody_type] = useState('');
+    const [trim, set_trim] = useState('');
+    const [mileage, set_mileage] = useState('');
+    const [sale_status, set_sale] = useState('');
+    const [year, set_year] = useState('');
+    // const [makerNameValue, setMakerNameValue] = useState('');
+
+
+    console.log(vehicle_id)
     const breadcrumbs = [
         { id: 1, name: 'Marketplace', href: '/marketplace' },
     ]
+    
+    const containerStyle = {
+      backgroundColor: '#e0e0e0', // Gray background color
+      color: '#000000', // Black text color
+      padding: '20px', // Add padding for better spacing
+      width: '960px', // Adjust the width as needed
+      borderRadius: '10px', // Add rounded corners
+      border: '2px solid #d1d1d1', // Add a border
+      boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)', // Add a subtle box shadow
+    };
   
+    const rowStyle = {
+      display: 'flex',
+      justifyContent: 'space-between',
+      alignItems: 'center',
+      marginBottom: '10px', // Add margin between rows
+    };
+  
+    const separatorStyle = {
+      border: '0.5px solid #000000', // Slightly black horizontal line
+      margin: '10px 0', // Adjust margin for better spacing
+    };
+    
+  useEffect(() => {
+    //initialLoad().then((data)=>{setData(data); createFilters(data); setLoading(false);}).catch((e)=>{window.alert("error while fetching the data")})
 
+    const fetchAllCars = async () => {
+      try {
+        const res = await axios.get(`http://localhost:8800/listings/${vehicle_id}`);
+        console.log('API Response:', res);
+        setData(res.data);
+        setLoading(false);
+        setMakerNameValue(res.data[0].MakerName); // Set makerNameValue
+        setmodelValue(res.data[0].model)
+        setPrice(res.data[0].price)
+        setbody_type(res.data[0].body_type)
+        set_trim(res.data[0].trim)
+        set_mileage(res.data[0].mileage)
+        set_sale(res.data[0].sale_status)
+        set_year(res.data[0].year)
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    fetchAllCars();
+    // setData(DemoData)
+    // createFilters(DemoData)
+    // setLoading(false)
+},[vehicle_id])
 
+console.log(data)
 
+const carData = data[0];
+// console.log(carData.model)
+if (data.length > 0 && data[0]) {
+  // Extract MakerName value
+  const makerNameValue = data[0].MakerName;
+
+  // Print the MakerName value
+  console.log(makerNameValue);
+} else {
+  console.error("Data array is empty or undefined.");
+}
+
+  // Render your component with fetched data
   return (
     <div className="bg-white">
-      <div className="pt-6">
-        <nav aria-label="Breadcrumb">
+      <div className="pt-6" >
+        <nav aria-label="Breadcrumb" className="flex justify-between items-center mx-auto max-w-2xl px-4 sm:px-6 lg:max-w-7xl lg:px-8">
           <ol role="list" className="mx-auto flex max-w-2xl items-center space-x-2 px-4 sm:px-6 lg:max-w-7xl lg:px-8">
             {breadcrumbs.map((breadcrumb) => (
               <li key={breadcrumb.id}>
@@ -54,50 +125,75 @@ export default function ListingOverview() {
               </Link>
             </li>
           </ol>
+          <div className="flex-grow" />
+          <button className="ml-auto bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                <Link to="/listing/update" style={{ color: "inherit", textDecoration: "none" }}>
+                  Update Listing
+                </Link>
+            </button>
         </nav>
-
-        <div className="mx-auto max-w-2xl px-4 pb-16 pt-10 sm:px-6 lg:grid lg:max-w-7xl lg:grid-cols-3 lg:grid-rows-[auto,auto,1fr] lg:gap-x-8 lg:px-8 lg:pb-24 lg:pt-16">
+      
+        <div className="mx-auto max-w-2xl px-4 pb-1 pt-10 sm:px-6 lg:grid lg:max-w-7xl lg:grid-cols-3 lg:grid-rows-[auto,auto,1fr] lg:gap-x-8 lg:px-8 lg:pb-2 lg:pt-16">
           <div className="lg:col-span-2 lg:border-r lg:border-gray-200 lg:pr-8">
-            <h1 className="text-2xl font-bold tracking-tight text-gray-900 sm:text-3xl">{`${car.maker} ${car.model}`}</h1>
+            <h1 className="text-2xl font-bold tracking-tight text-gray-900 sm:text-3xl">{makerNameValue} {modelValue}</h1>
           </div>
 
           {/* Options */}
-          <div className="mt-4 lg:row-span-3 lg:mt-0 flex items-baseline">
-            <h2 className="sr-only">Product information</h2>
-            <p className="text-3xl tracking-tight text-gray-900">${car.price}</p>
-            
-            <button className="ml-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-                <Link to="/listing/update" style={{ color: "inherit", textDecoration: "none" }}>
-                  Update Car Listing
-                </Link>
-            </button>
+          <div className="mt-2 lg:row-span-3 lg:mt-0 flex items-baseline">
+            <p className="text-3xl tracking-tight text-gray-900">${price}</p>
             
           </div>
-
-          <div className="py-10 lg:col-span-2 lg:col-start-1 lg:border-r lg:border-gray-200 lg:pb-16 lg:pr-8 lg:pt-6">
-            {/* Description and details */}
-            <div>
-              <h3 className="sr-only">Description</h3>
-
-              <div className="space-y-6">
-                <p className="text-base text-gray-900">{car.maker}</p>
-              </div>
-            </div>
-
-            <div className="mt-10">
-              <h3 className="text-sm font-medium text-gray-900">Highlights</h3>
-            </div>
-
-            <div className="mt-10">
-              <h2 className="text-sm font-medium text-gray-900">Details</h2>
-
-              <div className="mt-4 space-y-6">
-                <p className="text-sm text-gray-600">{car.model}</p>
-              </div>
-            </div>
           </div>
+      
+      </div>
+      <br></br>
+        <div style={{ display: 'flex', justifyContent: 'space-between', padding: '30px' }}>
+      {/* Left side */}
+      <div style={{ width: '40%', justifyContent: 'center', flexDirection: 'column', alignItems: 'center' }}>
+        <div style={{ margin: 'auto' }}>
+        <img src={acura} style={{ width: '170%', height: '130%', maxWidth: '200%', maxHeight: '200%',marginBottom: '30px', marginTop: '20px' , margin: 'auto' }} />
         </div>
+      <br></br>
+      <div style={containerStyle}>
+      <h1>Overview</h1>
+      <br></br>
+      <br></br>
+      <div style={rowStyle}>
+        <p><bold>Maker:</bold></p>
+        <p>{makerNameValue}</p>
+      </div>
+      <hr style={separatorStyle} />
+      <div style={rowStyle}>
+        <p><strong>Model:</strong></p>
+        <p>{modelValue}</p>
+      </div>
+      <hr style={separatorStyle} />
+      <div style={rowStyle}>
+        <p><strong>Body Type:</strong></p>
+        <p>{body_type}</p>
+      </div>
+      <hr style={separatorStyle} />
+      <div style={rowStyle}>
+        <p><strong>Trim:</strong></p>
+        <p>{trim}</p>
+      </div>
+      <hr style={separatorStyle} />
+      <div style={rowStyle}>
+        <p><strong>Mileage:</strong></p>
+        <p>{mileage}</p>
+      </div>
+      <hr style={separatorStyle} />
+      <div style={rowStyle}>
+        <p><strong>Year:</strong></p>
+        <p>{year}</p>
       </div>
     </div>
-  )
+
+      </div>
+      
+      
+        
+      </div>
+    </div>
+  );
 }

@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom"
-
+import logo from '../assets/acura.jpg';
   
   export default function PostingList({cars,filters}) {
     console.log(filters)
@@ -13,15 +13,15 @@ import { Link } from "react-router-dom"
                     <div className="grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8">
                         {cars.map((product) => {
                             const component = (
-                                <Link key={product.vehicle_id} to={`/listing/${product.vehicle_id}`} state={{name:`${product.maker} ${product.model}`}} className="group">
+                                <Link key={product.vehicle_id} to={`/listing/${product.vehicle_id}`} state={{name:`${product.MakerName} ${product.model}`}} className="group">
                                     <div className="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-lg bg-gray-200 xl:aspect-h-8 xl:aspect-w-7">
                                         <img
-                                        src={product.image_url}
-                                        alt={"Picture of"+product.maker+" "+product.model}
+                                        src={logo}
+                                        alt={"Picture of"+product.MakerName+" "+product.model}
                                         className="h-full w-full object-cover object-center group-hover:opacity-75"
                                         />
                                     </div>
-                                    <h3 className="mt-4 text-sm text-gray-700">{product.maker+", "+product.model}</h3>
+                                    <h3 className="mt-4 text-sm text-gray-700">{product.MakerName+", "+product.model}</h3>
                                     <h4 className="text-sm text-gray-700">{product.body_type}</h4>
     
                                     <p className="mt-1 text-lg font-medium text-gray-900">{product.price}</p>
