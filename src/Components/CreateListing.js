@@ -3,7 +3,7 @@ import { PhotoIcon } from '@heroicons/react/24/solid'
 import { useState } from 'react'
 import logo from '../assets/car.jpg';
 import '../App.css';
-import axios from "axios";
+import { apiClient } from "../axiosInstance";
 import { useLocation, Link, useParams, useNavigate } from 'react-router-dom'
 
 export default function CreateListing() {
@@ -54,7 +54,7 @@ export default function CreateListing() {
 
         console.log(updatedFormData)
 
-        const res = await axios.post('http://localhost:8800/listings', updatedFormData);
+        const res = await apiClient.post('listings', updatedFormData);
         console.log(res.data); // Log the response from the server
 
         window.alert('Records have been created!');

@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import { useLocation, Link, useParams, useNavigate } from 'react-router-dom'
 import axios from "axios";
 import acura from '../assets/acura.jpg';
-
+import { apiClient } from '../axiosInstance';
 
 const reviews = { href: '#', average: 4, totalCount: 117 }
 
@@ -63,7 +63,7 @@ export default function ListingOverview() {
 
     const fetchAllCars = async () => {
       try {
-        const res = await axios.get(`http://localhost:8800/listings/select/${vehicle_id}`);
+        const res = await apiClient.get(`listings/${vehicle_id}`);
         console.log('API Response:', res);
         setData(res.data);
         setLoading(false);
@@ -79,6 +79,8 @@ export default function ListingOverview() {
         set_city(res.data[0].city)
         set_stateAbbreviation(res.data[0].stateAbbreviation)
         set_zip5(res.data[0].zip5)
+        console.log(res.data)
+
       } catch (err) {
         console.log(err);
       }
@@ -106,7 +108,7 @@ if (data.length > 0 && data[0]) {
   const handleDelete = async () => {
     try {
       // Make a DELETE request using axios
-      await axios.delete(`http://localhost:8800/listings/${vehicle_id}`);
+      await apiClient.delete(`listings/${vehicle_id}`);
       window.alert('Records have been deleted!');
       navigate("/marketplace")
       

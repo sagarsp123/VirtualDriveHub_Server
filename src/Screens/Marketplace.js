@@ -5,6 +5,7 @@ import { ChevronDownIcon, FunnelIcon, MinusIcon, PlusIcon, Squares2X2Icon } from
 import PostingList from '../Components/PostingList'
 import { apiClient } from '../axiosInstance'
 import classNames from 'classnames';
+
 import axios from "axios";
 import { Link } from "react-router-dom";
 
@@ -110,7 +111,7 @@ export default function Marketplace() {
 
     const fetchAllCars = async () => {
       try {
-        const res = await axios.get("http://localhost:8800/listings");
+        const res = await apiClient.get("listings");
         setData(res.data);
         createFilters(res.data); 
         setLoading(false);
