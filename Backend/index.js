@@ -14,7 +14,7 @@ const db = mysql.createConnection({
 });
 
 app.get("/", (req, res) => {
-  res.json("hello");
+  res.json("hello, this is the API for Virtu Drive Hub.");
 });
 
 app.get("/listings", (req, res) => {
@@ -29,20 +29,20 @@ app.get("/listings", (req, res) => {
   });
 });
 
+// app.get("/listings/:id", (req, res) => {
+//   const id = req.params.id;
+//   const q = "SELECT l.price, l.year, l.vehicle_id, m.MakerName, l.model, l.body_type, l.trim, l.mileage, l.sale_status FROM listing l JOIN makers m ON l.vehicle_id = m.vehicle_id where l.vehicle_id = ?";
+
+//   db.query(q,[id], (err, data) => {
+//     if (err) {
+//       console.log(err);
+//       return res.json(err);
+//     }
+//     return res.json(data);
+//   });
+// });
+
 app.get("/listings/:id", (req, res) => {
-  const id = req.params.id;
-  const q = "SELECT l.price, l.year, l.vehicle_id, m.MakerName, l.model, l.body_type, l.trim, l.mileage, l.sale_status FROM listing l JOIN makers m ON l.vehicle_id = m.vehicle_id where l.vehicle_id = ?";
-
-  db.query(q,[id], (err, data) => {
-    if (err) {
-      console.log(err);
-      return res.json(err);
-    }
-    return res.json(data);
-  });
-});
-
-app.get("/listings/select/:id", (req, res) => {
   const id = req.params.id;
   const q = "SELECT l.price, l.year, l.vehicle_id, m.MakerName, l.model, l.body_type, l.trim, l.mileage, l.sale_status, loc.addressLine1, loc.city, loc.stateAbbreviation, loc.zip5 FROM listing l JOIN makers m ON l.vehicle_id = m.vehicle_id JOIN location loc ON l.vehicle_id = loc.vehicle_id where l.vehicle_id = ?";
 
