@@ -1,10 +1,111 @@
 
 import { PhotoIcon } from '@heroicons/react/24/solid'
-import { useState } from 'react'
+import { useState, useEffect} from 'react'
 import logo from '../assets/car.jpg';
+import { useLocation, Link, useParams, useNavigate } from 'react-router-dom'
+import axios from "axios";
 
 export default function UpdateListing() {
-    const [listing,setListing] = useState({})
+  const params = useParams()
+  const vehicle_id = params.id
+  const navigate = useNavigate()
+  const [listing,setListing] = useState({
+    MakerName: "",
+    model: "",
+    trim: "",
+    body_type: "",
+    year: "",
+    mileage: "",
+    sale_status: "",
+    price: "",
+    addressLine1: "",
+    city: "",
+    stateAbbreviation: "",
+    zip5: "",
+  });
+
+  useEffect(() => {
+    const fetchCarById = async () => {
+      try {
+        const res = await axios.get(`http://localhost:8800/listings/select/${vehicle_id}`);
+        console.log('API Response:', res);
+
+        if (res.data.length > 0) {
+          const carData = res.data[0];
+          setListing({
+            MakerName: carData.MakerName,
+            model: carData.model,
+            trim: carData.trim,
+            body_type: carData.body_type,
+            year: carData.year,
+            mileage: carData.mileage,
+            sale_status: carData.sale_status,
+            price: carData.price,
+            addressLine1: carData.addressLine1,
+            city: carData.city,
+            stateAbbreviation: carData.stateAbbreviation,
+            zip5: carData.zip5,
+          });
+        }
+      } catch (err) {
+        console.error('Error fetching car data:', err);
+      }
+    };
+
+    fetchCarById();
+  }, [vehicle_id]);
+
+  const handleFormSubmit = async (e) => {
+    e.preventDefault();
+
+    try {
+      // Make a PUT request to update the listing
+      const res = await axios.put(`http://localhost:8800/listings/${vehicle_id}`, {
+        MakerName: listing.MakerName,
+        model: listing.model,
+        trim: listing.trim,
+        body_type: listing.body_type,
+        year: listing.year,
+        mileage: listing.mileage,
+        sale_status: listing.sale_status,
+        price: listing.price,
+        addressLine1: listing.addressLine1,
+        city: listing.city,
+        stateAbbreviation: listing.stateAbbreviation,
+        zip5: listing.zip5,
+      });
+
+      // Log the API response
+      console.log('Update API Response:', res.data);
+
+      // Show a pop-up message
+      window.alert('Records have been updated!');
+
+      setListing({MakerName: '',
+      model: '',
+      trim: '',
+      body_type: '',
+      year: 2023,
+      mileage: 0,
+      sale_status: 'Available',
+      price: 0,
+      addressLine1: '',
+      city: '',
+      stateAbbreviation: '',
+      zip5: '',
+    });
+
+    navigate("/marketplace")
+
+      // Handle success, display a message or redirect as needed
+    } catch (err) {
+      console.error('Error updating data:', err);
+      // Handle error, display an error message or handle it accordingly
+    }
+  };
+
+
+  
   return (
     <div
       className='flex min-h-screen' style={{ color: 'white' }}>
@@ -20,7 +121,7 @@ export default function UpdateListing() {
 
     <div className='p-6 lg:px-10'>
     
-    <form className="border border-gray-900 p-8">
+    <form className="border border-gray-900 p-8" onSubmit={handleFormSubmit}>
       <div className="space-y-12">
         <div className="border-b border-gray-900/10 pb-12">
           <h1 className="text-2xl font-extrabold leading-7 text-gray-900">Update Existing Car Listing</h1>
@@ -42,6 +143,8 @@ export default function UpdateListing() {
                   id="MakerName"
                   autoComplete="MakerName"
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  value={listing.MakerName}
+                  onChange={(e) => setListing((prev) => ({ ...prev, MakerName: e.target.value }))}
                 />
               </div>
             </div>
@@ -57,6 +160,9 @@ export default function UpdateListing() {
                   id="model"
                   autoComplete="model"
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  value={listing.model}
+                  onChange={(e) => setListing((prev) => ({ ...prev, model: e.target.value }))}
+                
                 />
               </div>
             </div>
@@ -72,6 +178,9 @@ export default function UpdateListing() {
                   id="trim"
                   autoComplete="trim"
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  value={listing.trim}
+                  onChange={(e) => setListing((prev) => ({ ...prev, trim: e.target.value }))}
+                
                 />
               </div>
             </div>
@@ -88,6 +197,8 @@ export default function UpdateListing() {
                   type="text"
                   autoComplete="body_type"
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  value={listing.body_type}
+                  onChange={(e) => setListing((prev) => ({ ...prev, body_type: e.target.value }))}
                 />
               </div>
             </div>
@@ -102,6 +213,9 @@ export default function UpdateListing() {
                   name="year"
                   autoComplete="year"
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
+                  value={listing.year}
+                  onChange={(e) => setListing((prev) => ({ ...prev, year: e.target.value }))}
+                
                 >
                   <option>2023</option>
                   <option>2022</option>
@@ -130,6 +244,9 @@ export default function UpdateListing() {
                   type="number"
                   autoComplete="mileage"
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  value={listing.mileage}
+                  onChange={(e) => setListing((prev) => ({ ...prev, mileage: e.target.value }))}
+                
                 />
               </div>
             </div>
@@ -144,6 +261,9 @@ export default function UpdateListing() {
                   name="sale_status"
                   autoComplete="sale_status"
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
+                  value={listing.sale_status}
+                  onChange={(e) => setListing((prev) => ({ ...prev, sale_status: e.target.value }))}
+                
                 >
                   <option>Available</option>
                   <option>Sold</option>
@@ -162,6 +282,9 @@ export default function UpdateListing() {
                   type="number"
                   autoComplete="price"
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  value={listing.price}
+                  onChange={(e) => setListing((prev) => ({ ...prev, price: e.target.value }))}
+                
                 />
               </div>
             </div>
@@ -184,6 +307,9 @@ export default function UpdateListing() {
                   id="addressLine1"
                   autoComplete="addressLine1"
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  value={listing.addressLine1}
+                  onChange={(e) => setListing((prev) => ({ ...prev, addressLine1: e.target.value }))}
+                
                 />
               </div>
           </div>
@@ -199,21 +325,26 @@ export default function UpdateListing() {
                   id="city"
                   autoComplete="city"
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  value={listing.city}
+                  onChange={(e) => setListing((prev) => ({ ...prev, city: e.target.value }))}
+                
                 />
               </div>
             </div>
 
             <div className="sm:col-span-2">
-              <label htmlFor="state" className="block text-sm font-medium leading-6 text-gray-900">
+              <label htmlFor="stateAbbreviation" className="block text-sm font-medium leading-6 text-gray-900">
                 State Abbreviation
               </label>
               <div className="mt-2">
                 <input
                   type="text"
-                  name="state"
-                  id="state"
-                  autoComplete="state"
+                  name="stateAbbreviation"
+                  id="stateAbbreviation"
+                  autoComplete="stateAbbreviation"
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  value={listing.stateAbbreviation}
+                  onChange={(e) => setListing((prev) => ({ ...prev, stateAbbreviation: e.target.value }))}
                 />
               </div>
             </div>
@@ -229,33 +360,13 @@ export default function UpdateListing() {
                   id="zip5"
                   autoComplete="zip5"
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  value={listing.zip5}
+                  onChange={(e) => setListing((prev) => ({ ...prev, zip5: e.target.value }))}
                 />
               </div>
             </div>
 
           </div>
-        </div>
-
-        <div className="border-b border-gray-900/10 pb-12">
-          <h2 className="text-base font-bold leading-7 text-gray-900">Car Equipment Details</h2>
-          <div className="col-span-full">
-            <br></br>
-              <label htmlFor="equipment_details" className="block text-sm font-medium leading-6 text-gray-900">
-                Equipment Information
-              </label>
-              <div className="mt-2">
-                <textarea
-                  id="equipment_details"
-                  name="equipment_details"
-                  rows={3}
-                  value={listing.equipment_details}
-                  onChange={(e)=>setListing(prev=>{return {...prev,"description":e.target.value}})}
-                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                  defaultValue={''}
-                />
-              </div>
-              <p className="mt-3 text-sm leading-6 text-gray-600">Mention the car equipments in the field</p>
-            </div>
         </div>
 
         <div>

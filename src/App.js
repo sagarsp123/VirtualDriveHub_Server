@@ -19,7 +19,7 @@ function App() {
       <Route path="/maps" element={<h1>Maps</h1>} />
       <Route path='/listing/:id' element={<ListingOverview/>}/>
       <Route path='/listing/create' element={<CreateListing/>}/>
-      <Route path='/listing/update' element={<UpdateListing/>}/>
+      <Route path='/listing/update/:id' element={<UpdateListing/>}/>
       <Route path="*" element={<NotFound/>}/>
     </Routes>
     </>

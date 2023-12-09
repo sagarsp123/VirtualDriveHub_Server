@@ -9,8 +9,8 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 
 const sortOptions = [
-  { name: 'Price: Low to High', href: '#', current: false },
-  { name: 'Price: High to Low', href: '#', current: false },
+  { name: 'Price: Low to High',value: 'price_asc', href: '#', current: false },
+  { name: 'Price: High to Low',value: 'price_desc', href: '#', current: false },
 ];
 
 export default function Marketplace() {
@@ -18,6 +18,7 @@ export default function Marketplace() {
   const [data,setData] = useState([])
   const [displayFilters, setDisplayFilters] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [selectedFilters,setSelectedFilters] = useState(null)
 
   const initialLoad = async()=>{
     return new Promise(async (resolve,reject)=>{
@@ -43,16 +44,62 @@ export default function Marketplace() {
       {
         id: 'MakerName',
         name: 'Maker',
-        options: [...makerSet].map((x) => {
-          return { value: x, label: x.charAt(0).toUpperCase() + x.slice(1), checked: false };
-        }),
+        // options: [...makerSet].map((x) => {
+        //   return { value: x, label: x.charAt(0).toUpperCase() + x.slice(1), checked: false };
+        // }),
+        options: [...makerSet].map(x=>{return {value:x, label:x.charAt(0).toUpperCase() + x.slice(1), checked: false}}),
+              handleChange: function(event){
+
+                setSelectedFilters((prev)=>{
+                  if(event.target.checked){
+                      if(prev==null){
+                        prev = {
+                          "MakerName":[event.target.value]
+                        }
+                      }else{
+                        if(prev.MakerName==undefined){
+                          prev.MakerName=[event.target.value]
+                        }else{
+                          prev.MakerName.push(event.target.value)
+                        }
+                      }
+                  }else{
+                    prev.MakerName = prev.MakerName.filter((item)=>{
+                      return item!==event.target.value
+                    })
+                  }
+                  return {...prev};
+                })
+              },
       },
       {
         id: 'body_type',
         name: 'Body Type',
-        options: [...bodyTypeSet].map((x) => {
-          return { value: x, label: x.charAt(0).toUpperCase() + x.slice(1), checked: false };
-        }),
+        // options: [...bodyTypeSet].map((x) => {
+        //   return { value: x, label: x.charAt(0).toUpperCase() + x.slice(1), checked: false };
+        // }),
+        options: [...bodyTypeSet].map(x=>{return {value:x, label:x.charAt(0).toUpperCase() + x.slice(1), checked: false}}),
+              handleChange: function(event){                
+                setSelectedFilters((prev)=>{
+                  if(event.target.checked){
+                      if(prev===null){
+                        prev = {
+                          "body_type":[event.target.value]
+                        }
+                      }else{
+                        if(prev.body_type==undefined){
+                          prev.body_type=[]
+                        }
+                        prev.body_type.push(event.target.value)
+                      }
+                  }else{
+                    prev.body_type = prev.body_type.filter((item)=>{
+                      return item!==event.target.value
+                    })
+                  }
+                  return {...prev};
+                })
+              },
       },
     ];
     setDisplayFilters(filters);
@@ -151,7 +198,8 @@ export default function Marketplace() {
                                           name={`${section.id}[]`}
                                           defaultValue={option.value}
                                           type="checkbox"
-                                          onChange={(e) => console.log(e.target)}
+                                          // onChange={(e) => console.log(e.target)}
+                                          onChange={(e)=>section.handleChange(e)}
                                           defaultChecked={option.checked}
                                           className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
                                         />
@@ -178,19 +226,11 @@ export default function Marketplace() {
 
             <main className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
               <div className="flex items-baseline justify-between border-b border-gray-200 pb-6 pt-6">
-                <h1 className="text-4xl font-bold tracking-tight text-gray-900">Car Postings</h1>
+                <h1 className="text-4xl font-bold tracking-tight text-gray-900">Car Marketplace</h1>
 
                 <div className="flex items-center">
                   <Menu as="div" className="relative inline-block text-left">
                     <div>
-                      <Menu.Button className="group inline-flex justify-center text-sm font-medium text-gray-700 hover:text-gray-900">
-                        Sort
-                        <ChevronDownIcon
-                          className="-mr-1 ml-1 h-5 w-5 flex-shrink-0 text-gray-400 group-hover:text-gray-500"
-                          aria-hidden="true"
-                        />
-                      </Menu.Button>
-
                       <button className="ml-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
                 <Link to="/listing/create" style={{ color: "inherit", textDecoration: "none" }}>
                   Add Listing
@@ -278,6 +318,8 @@ export default function Marketplace() {
                                       name={`${section.id}[]`}
                                       defaultValue={option.value}
                                       type="checkbox"
+
+                                      onChange={(e)=>section.handleChange(e)}
                                       defaultChecked={option.checked}
                                       className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
                                     />
@@ -299,7 +341,7 @@ export default function Marketplace() {
 
                   {/* Product grid */}
                   <div className="lg:col-span-3">
-                    <PostingList cars={data} />
+                    <PostingList cars={data}  filters={selectedFilters}/>
                   </div>
                 </div>
               </section>

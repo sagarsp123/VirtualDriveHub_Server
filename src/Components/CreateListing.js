@@ -4,9 +4,11 @@ import { useState } from 'react'
 import logo from '../assets/car.jpg';
 import '../App.css';
 import axios from "axios";
+import { useLocation, Link, useParams, useNavigate } from 'react-router-dom'
 
 export default function CreateListing() {
     const [listing,setListing] = useState({})
+    const navigate = useNavigate()
     const [formData, setFormData] = useState({
       MakerName: '',
       model: '',
@@ -18,7 +20,7 @@ export default function CreateListing() {
       price: 0,
       addressLine1: '',
       city: '',
-      state: '',
+      stateAbbreviation: '',
       zip5: '',
       // equipment_details: '',
       // image_url: '', // Add this field for image URL
@@ -44,7 +46,7 @@ export default function CreateListing() {
           price: e.target.price.value,
           addressLine1: e.target.addressLine1.value,
           city: e.target.city.value,
-          state: e.target.state.value,
+          stateAbbreviation: e.target.stateAbbreviation.value,
           zip5: e.target.zip5.value,
           // equipment_details: e.target.equipment_details.value,
           // image_url: e.target.image_url.value,
@@ -54,6 +56,24 @@ export default function CreateListing() {
 
         const res = await axios.post('http://localhost:8800/listings', updatedFormData);
         console.log(res.data); // Log the response from the server
+
+        window.alert('Records have been created!');
+
+        setFormData({MakerName: '',
+        model: '',
+        trim: '',
+        body_type: '',
+        year: 2023,
+        mileage: 0,
+        sale_status: 'Available',
+        price: 0,
+        addressLine1: '',
+        city: '',
+        stateAbbreviation: '',
+        zip5: '',
+      });
+
+      navigate("/marketplace")
         // You can add additional logic here if needed
       } catch (error) {
         console.error('Error submitting form:', error);
@@ -280,17 +300,17 @@ export default function CreateListing() {
             </div>
 
             <div className="sm:col-span-2">
-              <label htmlFor="state" className="block text-sm font-medium leading-6 text-gray-900">
+              <label htmlFor="stateAbbreviation" className="block text-sm font-medium leading-6 text-gray-900">
                 State Abbreviation
               </label>
               <div className="mt-2">
                 <input
                   type="text"
-                  name="state"
-                  id="state"
-                  value = {formData.state}
+                  name="stateAbbreviation"
+                  id="stateAbbreviation"
+                  value = {formData.stateAbbreviation}
                   onChange={handleInputChange}
-                  autoComplete="state"
+                  autoComplete="stateAbbreviation"
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
               </div>
@@ -338,7 +358,7 @@ export default function CreateListing() {
             </div>
         </div> */}
 
-        {/* <div>
+        <div>
         <label htmlFor="image_url" className="block text-sm font-medium leading-6 text-gray-900">
                 Image URL
           </label>
@@ -348,7 +368,7 @@ export default function CreateListing() {
           accept="image/*"
           // onChange={handleImageChange}
         />
-        </div> */}
+        </div>
 
       </div>
 

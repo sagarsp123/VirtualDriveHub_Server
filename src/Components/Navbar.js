@@ -54,9 +54,9 @@ export default function Navbar() {
         </div>
         <Popover.Group className="hidden lg:flex lg:gap-x-12">
           
-        <Link to="/maps" className="text-sm font-semibold leading-6 text-gray-900">
+        {/* <Link to="/maps" className="text-sm font-semibold leading-6 text-gray-900">
             Map View
-        </Link>          
+        </Link>           */}
           <Link to="/marketplace" className="text-sm font-semibold leading-6 text-gray-900">
             Marketplace
           </Link>

@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { useLocation, Link, useParams } from 'react-router-dom'
+import { useLocation, Link, useParams, useNavigate } from 'react-router-dom'
 import axios from "axios";
 import acura from '../assets/acura.jpg';
 
@@ -9,6 +9,7 @@ const reviews = { href: '#', average: 4, totalCount: 117 }
 
 export default function ListingOverview() {
     const location = useLocation()
+    const navigate = useNavigate()
     const {name} = location.state
     const params = useParams()
     const vehicle_id = params.id
@@ -23,6 +24,10 @@ export default function ListingOverview() {
     const [mileage, set_mileage] = useState('');
     const [sale_status, set_sale] = useState('');
     const [year, set_year] = useState('');
+    const [addressLine1, set_addressLine1] = useState('');
+    const [city, set_city] = useState('');
+    const [stateAbbreviation, set_stateAbbreviation] = useState('');
+    const [zip5, set_zip5] = useState('');
     // const [makerNameValue, setMakerNameValue] = useState('');
 
 
@@ -58,7 +63,7 @@ export default function ListingOverview() {
 
     const fetchAllCars = async () => {
       try {
-        const res = await axios.get(`http://localhost:8800/listings/${vehicle_id}`);
+        const res = await axios.get(`http://localhost:8800/listings/select/${vehicle_id}`);
         console.log('API Response:', res);
         setData(res.data);
         setLoading(false);
@@ -70,6 +75,10 @@ export default function ListingOverview() {
         set_mileage(res.data[0].mileage)
         set_sale(res.data[0].sale_status)
         set_year(res.data[0].year)
+        set_addressLine1(res.data[0].addressLine1)
+        set_city(res.data[0].city)
+        set_stateAbbreviation(res.data[0].stateAbbreviation)
+        set_zip5(res.data[0].zip5)
       } catch (err) {
         console.log(err);
       }
@@ -93,6 +102,18 @@ if (data.length > 0 && data[0]) {
 } else {
   console.error("Data array is empty or undefined.");
 }
+
+  const handleDelete = async () => {
+    try {
+      // Make a DELETE request using axios
+      await axios.delete(`http://localhost:8800/listings/${vehicle_id}`);
+      window.alert('Records have been deleted!');
+      navigate("/marketplace")
+      
+    } catch (error) {
+      console.error('Error deleting listing:', error);
+    } 
+  };
 
   // Render your component with fetched data
   return (
@@ -126,10 +147,18 @@ if (data.length > 0 && data[0]) {
             </li>
           </ol>
           <div className="flex-grow" />
-          <button className="ml-auto bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-                <Link to="/listing/update" style={{ color: "inherit", textDecoration: "none" }}>
+          <button className="ml-auto mr-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                <Link key={vehicle_id}  to={`/listing/update/${vehicle_id}`} style={{ color: "inherit", textDecoration: "none" }} className="group">
                   Update Listing
                 </Link>
+            </button>
+            
+            {/* <Link key={product.vehicle_id} to={`/listing/${product.vehicle_id}`} state={{name:`${product.MakerName} ${product.model}`}} className="group"></Link> */}
+            <button className="ml-auto bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
+            onClick={handleDelete}
+            disabled={loading}
+            >
+                  Delete Listing
             </button>
         </nav>
       
@@ -140,8 +169,9 @@ if (data.length > 0 && data[0]) {
 
           {/* Options */}
           <div className="mt-2 lg:row-span-3 lg:mt-0 flex items-baseline">
-            <p className="text-3xl tracking-tight text-gray-900">${price}</p>
-            
+            <p className="text-3xl tracking-tight text-gray-900 mr-12 lg:mb-0">${price}</p>
+            <p className="text-2xl tracking-tight text-gray-900">Status: <span className={`${sale_status === 'Available' ? 'text-green-500' : 'text-red-500'}`}>{sale_status}</span></p>
+
           </div>
           </div>
       
@@ -151,7 +181,8 @@ if (data.length > 0 && data[0]) {
       {/* Left side */}
       <div style={{ width: '40%', justifyContent: 'center', flexDirection: 'column', alignItems: 'center' }}>
         <div style={{ margin: 'auto' }}>
-        <img src={acura} style={{ width: '170%', height: '130%', maxWidth: '200%', maxHeight: '200%',marginBottom: '30px', marginTop: '20px' , margin: 'auto' }} />
+        <img src={`https://raw.github.com/VarunS9000/dump_repo/main/all_imgs/${encodeURIComponent(makerNameValue)}%20${encodeURIComponent(modelValue)}.jpg`}
+                                         style={{ width: '170%', height: '130%', maxWidth: '200%', maxHeight: '200%',marginBottom: '30px', marginTop: '20px' , margin: 'auto' }} />
         </div>
       <br></br>
       <div style={containerStyle}>
@@ -159,7 +190,7 @@ if (data.length > 0 && data[0]) {
       <br></br>
       <br></br>
       <div style={rowStyle}>
-        <p><bold>Maker:</bold></p>
+        <p><strong>Maker:</strong></p>
         <p>{makerNameValue}</p>
       </div>
       <hr style={separatorStyle} />
@@ -186,6 +217,26 @@ if (data.length > 0 && data[0]) {
       <div style={rowStyle}>
         <p><strong>Year:</strong></p>
         <p>{year}</p>
+      </div>
+      <hr style={separatorStyle} />
+      <div style={rowStyle}>
+        <p><strong>Address:</strong></p>
+        <p>{addressLine1}</p>
+      </div>
+      <hr style={separatorStyle} />
+      <div style={rowStyle}>
+        <p><strong>City:</strong></p>
+        <p>{city}</p>
+      </div>
+      <hr style={separatorStyle} />
+      <div style={rowStyle}>
+        <p><strong>StateAbbreviation:</strong></p>
+        <p>{stateAbbreviation}</p>
+      </div>
+      <hr style={separatorStyle} />
+      <div style={rowStyle}>
+        <p><strong>Zip Code:</strong></p>
+        <p>{zip5}</p>
       </div>
     </div>
 
